@@ -13,7 +13,23 @@ data "aws_ami" "ami" {
   owners = ["099720109477"]
 }
 
-resource "aws_instance" "ansible_server" {
+data "aws_default_vpc" "default" {}
+
+data "aws_subnets" "default_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_default_vpc.default.id]
+  }
+}
+
+resource "aws_instance" "web" {
   ami           = data.aws_ami.ami.id
   instance_type = "t3.micro"
+  subnet_id     = data.aws_subnets.default_subnets.ids[0]
+}
+
+data "aws_default_vpc" "default" {}
+
+resource "aws_default_subnet" "default_a" {
+  availability_zone = "us-west-2a"
 }

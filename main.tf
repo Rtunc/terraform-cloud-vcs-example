@@ -28,8 +28,6 @@ resource "aws_instance" "web" {
   subnet_id     = data.aws_subnets.default_subnets.ids[0]
 }
 
-data "aws_default_vpc" "default" {}
-
 resource "aws_default_subnet" "default_a" {
   availability_zone = "us-west-2a"
 }

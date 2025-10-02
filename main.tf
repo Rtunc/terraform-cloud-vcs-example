@@ -13,12 +13,14 @@ data "aws_ami" "ami" {
   owners = ["099720109477"]
 }
 
-data "aws_default_vpc" "default" {}
+data "aws_vpc" "default" {
+  default = true
+}
 
 data "aws_subnets" "default_subnets" {
   filter {
     name   = "vpc-id"
-    values = [data.aws_default_vpc.default.id]
+    values = [data.aws_vpc.default.id]
   }
 }
 
